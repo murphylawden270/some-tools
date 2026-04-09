@@ -55,7 +55,7 @@ if st.button("Fetch"):
 
             for i in x:
                 y = i[1].split("|")
-                correct_name = re.findall(rf'\|switch\|{i[0]}: {y[0].strip()}\|([^,|]+)(?:,[^|]*)?\|', str(c))
+                correct_name = re.findall(rf'\|(?:switch|drag)\|{i[0]}: {y[0].strip()}\|([^,|]+)(?:,[^|]*)?\|', str(c))
                 with lock:
                     if correct_name[0] not in pokemon_tera:
                         pokemon_tera[correct_name[0]] = []
