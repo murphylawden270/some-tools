@@ -29,7 +29,9 @@ if st.button("Fetch"):
         table.append(header)
         final_no_tera = 0
         proccessed_replays = []
-
+        
+tech = Session()
+        
         def proccess_replays(replay):
             no_tera = 0
 
@@ -43,7 +45,7 @@ if st.button("Fetch"):
                     return None
                 proccessed_replays.append(replay)
 
-            b = requests.get(replay)
+            b = tech.get(replay)
             c = b.text
             if "<h1>Not Found</h1>" in c:
                 replay_warn.append(f'Invalid Replay : {replay}! No Tera could be extracted!')
@@ -64,10 +66,10 @@ if st.button("Fetch"):
                     tera = y[1].strip()
                     pokemon_tera[correct_name[0]].append(tera)
             return no_tera
-                
-
-        with ThreadPoolExecutor(max_workers=20) as executor:
-            link = list(executor.map(proccess_replays, links.splitlines()))
+        attempts = links.splitlines()
+        limit = min(50, len(attempts))
+        with ThreadPoolExecutor(max_workers=limit) as executor:
+            link = list(executor.map(proccess_replays, attempts))
 
         for i in link:
             if i is not None:
