@@ -1,7 +1,6 @@
 import streamlit as st
 import re
 import requests
-from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 from collections import Counter
@@ -45,12 +44,12 @@ if st.button("Fetch"):
                 proccessed_replays.append(replay)
 
             b = requests.get(replay)
-            c = BeautifulSoup(b.text, features="html.parser")
-            if "<h1>Not Found</h1>" in str(c):
+            c = b.text
+            if "<h1>Not Found</h1>" in c:
                 replay_warn.append(f'Invalid Replay : {replay}! No Tera could be extracted!')
                 return None
             else:
-                x = re.findall(r'\|-terastallize\|(.*): (.*)', str(c))
+                x = re.findall(r'\|-terastallize\|(.*): (.*)', c)
             if len(x) == 1:
                 no_tera += 1
             elif len(x) == 0:
@@ -58,7 +57,7 @@ if st.button("Fetch"):
 
             for i in x:
                 y = i[1].split("|")
-                correct_name = re.findall(rf'\|(?:switch|drag)\|{i[0]}: {y[0].strip()}\|([^,|]+)(?:,[^|]*)?\|', str(c))
+                correct_name = re.findall(rf'\|(?:switch|drag)\|{i[0]}: {y[0].strip()}\|([^,|]+)(?:,[^|]*)?\|', c)
                 with lock:
                     if correct_name[0] not in pokemon_tera:
                         pokemon_tera[correct_name[0]] = []
