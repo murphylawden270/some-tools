@@ -5,7 +5,12 @@ from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
 
-st.title("Tera Fetcher:")
+st.set_page_config(
+    page_title="Tera Fetcher",
+    layout="wide"
+)
+
+st.title("Tera Fetcher Tool For Usage Stats:")
 
 if "bbcode" not in st.session_state:
     st.session_state.bbcode = ""
