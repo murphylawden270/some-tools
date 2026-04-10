@@ -116,7 +116,7 @@ with st.container(border=False, horizontal=True):
                 
     if st.button("Clear"):
         st.session_state.bbcode = ""
-        st.session_state.reset_links = True
+        st.session_state.reset = True
         st.rerun()
 
 st.caption("BB Code:")
