@@ -46,7 +46,7 @@ if st.button("Fetch"):
             b = requests.get(replay)
             c = BeautifulSoup(b.text, features="html.parser")
             if "<h1>Not Found</h1>" in str(c):
-                replay_warn.append(f'Ivalid Replay : {replay}! No Tera could be extracted!')
+                replay_warn.append(f'Invalid Replay : {replay}! No Tera could be extracted!')
                 return None
             else:
                 x = re.findall(r'\|-terastallize\|(.*): (.*)', str(c))
