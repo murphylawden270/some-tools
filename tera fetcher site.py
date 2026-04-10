@@ -89,11 +89,13 @@ with st.container(border=False, horizontal=True):
                 return no_tera
                 
             attempts = links.splitlines()
+            n = attempts
     
-            with st.spinner(f"Processing {len(attempts)} replays..."):
+            with st.spinner(f"Processing {n} replays..."):
                 limit = min(100, len(attempts))
                 with ThreadPoolExecutor(max_workers=limit) as executor:
                     link = list(executor.map(proccess_replays, attempts))
+                    n -= 1
     
             for i in link:
                 if i is not None:
