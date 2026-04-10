@@ -30,7 +30,7 @@ if st.button("Fetch"):
         final_no_tera = 0
         proccessed_replays = []
         
-tech = Session()
+        tech = Session()
         
         def proccess_replays(replay):
             no_tera = 0
