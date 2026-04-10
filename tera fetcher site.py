@@ -17,7 +17,7 @@ if "bbcode" not in st.session_state:
 
 links = st.text_area("Enter Replay URL Here...", height=200)
 
-col1, col2 = st.row(1)
+col1, col2 = st.columns(1)
 with col1:
     if st.button("Fetch"):
         if links.strip():
@@ -56,7 +56,7 @@ with col1:
                             c = b.text
                         break
                     except requests.exceptions.Timeout:
-                        if attempt == retries - 1:
+                        if attempt == retry - 1:
                             with lock:
                                 replay_warn.append(f'Timeout after {retries} attempts: {replay}!')
                             return None
