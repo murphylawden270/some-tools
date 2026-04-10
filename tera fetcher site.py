@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
 from threading import Lock
+from collections import Counter
 
 st.set_page_config(
     page_title="Tera Fetcher",
@@ -77,15 +78,7 @@ if st.button("Fetch"):
         sorted_table = {k: pokemon_tera[k] for k in sorted_by_tera}
 
         for key, values in sorted_table.items():
-            type_count = {}
-            for i in values:
-                type = 0
-                if i not in type_count:
-                    type_count[i] = ""
-                for j in values:
-                    if i == j:
-                        type += 1
-                type_count[i] = type
+            type_count = Counter(values)
             each_mon = ", ".join([f"{t} ({c})" for t, c in type_count.items()])
             h1 = f'[TR][TD width="33.3333%"]:{key}:{key}[/TD][TD width="10%"]{len(values)}[/TD][TD width="33.3333%"]{each_mon}[/TD][/TR]'
             table.append(h1)
