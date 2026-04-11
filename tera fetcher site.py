@@ -65,7 +65,7 @@ with st.container(border=False, horizontal=True):
                             return None
                     except requests.exceptions.RequestException as e:
                         with lock:
-                            replay_warn.append(f'Error fetching {replay}: {e}')
+                            replay_warn.append(f'Error fetching {replay}! Replay is most likely invalid. Please, recheck the link and try again!')
                         return None
                 if "<h1>Not Found</h1>" in c:
                     with lock:
@@ -91,7 +91,7 @@ with st.container(border=False, horizontal=True):
             attempts = links.splitlines()
             n = len(attempts)
     
-            with st.spinner(f"Processing {n} replays...", show_time=True):
+            with st.spinner("",show_time=True):
                 limit = min(100, n)
                 with ThreadPoolExecutor(max_workers=limit) as executor:
                     link = list(executor.map(proccess_replays, attempts))
@@ -112,13 +112,14 @@ with st.container(border=False, horizontal=True):
             table.append("[/TABLE]")
     
             st.session_state.bbcode = "\n".join(table)
-            if replay_warn:
-                st.code("\n".join(replay_warn))
                 
     if st.button("Clear"):
         st.session_state.bbcode = ""
         st.session_state.reset = True
         st.rerun()
+    
+    if replay_warn:
+    st.code("\n".join(replay_warn))
 
 st.caption("BB Code:")
 st.code(st.session_state.bbcode, language=None, height=300)
