@@ -39,6 +39,9 @@ with st.container(border=False, horizontal=True):
             
             def proccess_replays(replay, retry = 5):
                 no_tera = 0
+
+                if replay.strip() == "":
+                    return
     
                 if not replay.startswith("https://replay"):
                     with lock:
