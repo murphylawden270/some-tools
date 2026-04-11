@@ -91,7 +91,7 @@ with st.container(border=False, horizontal=True):
             attempts = links.splitlines()
             n = len(attempts)
     
-            with st.spinner(f"Processing {n} replays..."):
+            with st.spinner(f"Processing {n} replays...", show_time=True):
                 limit = min(100, n)
                 with ThreadPoolExecutor(max_workers=limit) as executor:
                     link = list(executor.map(proccess_replays, attempts))
